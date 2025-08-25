@@ -23,7 +23,7 @@ Future<void> registerToDi(String parentFolder, String name) async {
   ];
 
   var datasourceDiContent = [
-    "        if (!sl.isRegistered<${className}LocalDataSource>()) {",
+    "    if (!sl.isRegistered<${className}LocalDataSource>()) {",
     "      sl.registerSingleton<${className}LocalDataSource>(${className}LocalDataSourceImpl(sl<LocalDatabase>()));",
     "    }",
     "    if (!sl.isRegistered<${className}RemoteDataSource>()) {",
@@ -55,27 +55,8 @@ void _register({required File file, required Iterable<String> imports, required 
       print('❌ No register(GetIt sl) found');
       return;
     }
-
-    // Find the matching closing brace for init()
-    int braceCount = 0;
-    int closingIndex = -1;
-    for (int i = initIndex; i < lines.length; i++) {
-      final line = lines[i];
-      braceCount += RegExp(r'{').allMatches(line).length;
-      braceCount -= RegExp(r'}').allMatches(line).length;
-
-      if (braceCount == 0) {
-        closingIndex = i; // This } belongs to init()
-        break;
-      }
-    }
-
-    if (closingIndex == -1) {
-      print('❌ Could not find closing } for init()');
-      return;
-    }
     lines.insertAll(0, imports);
-    lines.insertAll(closingIndex, content);
+    lines.insertAll(lines.length - 3, content);
 
     await file.writeAsString(lines.join('\n'));
 
