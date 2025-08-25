@@ -1,6 +1,6 @@
 import 'dart:io';
 
-void generateBloc(String name) {
+void generateBloc(String parentFolder, String name) {
   final fileName = name.toLowerCase();
   final className = name[0].toUpperCase() + name.substring(1);
   final folder = Directory('presentation/bloc/$fileName');
@@ -10,7 +10,7 @@ void generateBloc(String name) {
   }
   // Bloc
   final blocFile = File('presentation/bloc/$fileName/${fileName}_bloc.dart');
-  blocFile.writeAsStringSync(blocPattern(fileName, className));
+  blocFile.writeAsStringSync(_blocPattern(parentFolder, fileName, className));
   // Event
   final eventFile = File('presentation/bloc/$fileName/${fileName}_event.dart');
   eventFile.writeAsStringSync(eventPattern(fileName, className));
@@ -20,13 +20,13 @@ void generateBloc(String name) {
   print('✅ Created $fileName bloc, event and state');
 }
 
-String blocPattern(String fileName, String className) =>
+String _blocPattern(String parent, String fileName, String className) =>
     '''
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:texnomart_v2/core/utils/enums/status.dart';
-import '../../../domain/repositories/${fileName}_repository.dart';
+import 'package:texnomart_v2/features/$parent/domain/repositories/${fileName}_repository.dart';
 
 part '${fileName}_event.dart';
 part '${fileName}_state.dart';

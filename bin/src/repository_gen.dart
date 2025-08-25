@@ -1,6 +1,6 @@
 import 'dart:io';
 
-void generateRepository(String name) {
+void generateRepository(String parentFolder, String name) {
   final fileName = name.toLowerCase();
   final className = name[0].toUpperCase() + name.substring(1);
   final repositoryFolder = Directory('domain/repositories');
@@ -20,7 +20,7 @@ void generateRepository(String name) {
 
   // RepositoryImpl
   final repositoryImplFile = File('data/repositories_impl/${fileName}_repository_impl.dart');
-  repositoryImplFile.writeAsStringSync(repositoryImplPattern(fileName, className));
+  repositoryImplFile.writeAsStringSync(_repositoryImplPattern(parentFolder, fileName, className));
   print('✅ Created $fileName repository impl');
 }
 
@@ -33,12 +33,12 @@ abstract class ${className}Repository {
 }
 ''';
 
-String repositoryImplPattern(String fileName, String className) =>
+String _repositoryImplPattern(String parent, String fileName, String className) =>
     '''
 import 'package:texnomart_v2/common/models/result.dart';
-import '../datasources/remote/${fileName}_remote_datasource.dart';
-import '../datasources/local/${fileName}_local_datasource.dart';
-import '../../domain/repositories/${fileName}_repository.dart';
+import 'package:texnomart_v2/features/$parent/data/datasources/remote/${fileName}_remote_datasource.dart';
+import 'package:texnomart_v2/features/$parent/data/datasources/local/${fileName}_local_datasource.dart';
+import 'package:texnomart_v2/features/$parent/domain/repositories/${fileName}_repository.dart';
 
 class ${className}RepositoryImpl implements ${className}Repository {
   final ${className}RemoteDataSource ${fileName}RemoteDataSource;

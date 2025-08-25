@@ -42,11 +42,12 @@ void main(List<String> arguments) {
       print('❌ Please provide a name. Example: tmgen Profile');
       exit(1);
     }
+    final cwd = Directory.current.absolute.path.split(Platform.pathSeparator).last;
 
     generateDatasource(results.rest.first);
-    generateRepository(results.rest.first);
-    generateBloc(results.rest.first);
-    registerToDi(results.rest.first);
+    generateRepository(cwd, results.rest.first);
+    generateBloc(cwd, results.rest.first);
+    registerToDi(cwd, results.rest.first);
 
     // Act on the arguments provided.
     print('Positional arguments: ${results.rest}');
