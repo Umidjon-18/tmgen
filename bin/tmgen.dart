@@ -15,7 +15,7 @@ ArgParser buildParser() {
 }
 
 void printUsage(ArgParser argParser) {
-  print('Usage: dart hopegen.dart <flags> [arguments]');
+  print('Usage: dart tmgen.dart <flags> [arguments]');
   print(argParser.usage);
 }
 
@@ -31,14 +31,14 @@ void main(List<String> arguments) {
       return;
     }
     if (results.flag('version')) {
-      print('hopegen version: $version');
+      print('tmgen version: $version');
       return;
     }
     if (results.flag('verbose')) {
       verbose = true;
     }
     if (results.rest.isEmpty) {
-      print('❌ Please provide a name. Example: hopegen Profile');
+      print('❌ Please provide a name. Example: tmgen Profile');
       exit(1);
     }
 
