@@ -23,6 +23,7 @@ void generateBloc(String name) {
 String blocPattern(String fileName, String className) =>
     '''
 import 'dart:async';
+import 'package:meta/meta.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:texnomart_v2/core/utils/enums/status.dart';
 import '../../../domain/repositories/${fileName}_repository.dart';

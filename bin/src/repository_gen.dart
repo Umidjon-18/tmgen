@@ -36,13 +36,15 @@ abstract class ${className}Repository {
 String repositoryImplPattern(String fileName, String className) =>
     '''
 import 'package:texnomart_v2/common/models/result.dart';
-import '../datasources/${fileName}_remote_datasource.dart';
+import '../datasources/remote/${fileName}_remote_datasource.dart';
+import '../datasources/local/${fileName}_local_datasource.dart';
 import '../../domain/repositories/${fileName}_repository.dart';
 
 class ${className}RepositoryImpl implements ${className}Repository {
   final ${className}RemoteDataSource ${fileName}RemoteDataSource;
+  final ${className}LocalDataSource ${fileName}LocalDataSource;
 
-  ${className}RepositoryImpl(this.${fileName}RemoteDataSource);
+  ${className}RepositoryImpl(this.${fileName}RemoteDataSource, this.${fileName}LocalDataSource);
   @override
   Future<Result> get() async {
     final result = await ${fileName}RemoteDataSource.fetch();

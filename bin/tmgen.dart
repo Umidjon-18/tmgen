@@ -4,6 +4,7 @@ import 'package:args/args.dart';
 import 'src/bloc_gen.dart';
 import 'src/repository_gen.dart';
 import 'src/datasource_gen.dart';
+import 'src/register_to_di.dart';
 
 const String version = '0.0.1';
 
@@ -45,6 +46,7 @@ void main(List<String> arguments) {
     generateDatasource(results.rest.first);
     generateRepository(results.rest.first);
     generateBloc(results.rest.first);
+    registerToDi(results.rest.first);
 
     // Act on the arguments provided.
     print('Positional arguments: ${results.rest}');
